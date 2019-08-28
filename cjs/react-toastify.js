@@ -1212,18 +1212,15 @@ toast.isActive = function (id, containerId) {
 eventManager.on(ACTION.DID_MOUNT, function (containerInstance) {
   latestInstance = containerInstance.props.containerId || containerInstance;
   containers.set(latestInstance, containerInstance);
-
-  toast.isActive = function (id) {
-    return containerInstance.isToastActive(id);
-  };
-
   queue.forEach(function (item) {
     eventManager.emit(item.action, item.content, item.options);
   });
   queue = [];
 }).on(ACTION.WILL_UNMOUNT, function (containerInstance) {
   if (containerInstance) containers.delete(containerInstance.props.containerId || containerInstance);else containers.clear();
-  toast.isActive = NOOP;
+  containers.forEach(function (container) {
+    container.listenToToastActions();
+  });
 
   if (canUseDom && containerDomNode) {
     document.body.removeChild(containerDomNode);
