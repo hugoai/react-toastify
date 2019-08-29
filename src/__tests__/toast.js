@@ -16,7 +16,7 @@ afterEach(() => {
   eventManager
     .off(ACTION.SHOW)
     .off(ACTION.CLEAR)
-    .off(ACTION.ON_CHANGE)
+    .off(ACTION.ON_CHANGE);
 });
 
 function ensureLazyContainerIsNotMounted() {

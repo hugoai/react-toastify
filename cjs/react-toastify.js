@@ -587,13 +587,23 @@ var Flip = cssTransition({
 
 var eventManager = {
   list: new Map(),
-  on: function on(event, callback) {
+  on: function on(event, callback, listenerId) {
+    callback.listenerId = listenerId;
     this.list.has(event) || this.list.set(event, []);
     this.list.get(event).push(callback);
     return this;
   },
-  off: function off(event) {
-    this.list.delete(event);
+  off: function off(event, listenerId) {
+    if (listenerId) {
+      this.list.has(event) || this.list.set(event, []);
+      var callbacks = this.list.get(event);
+      this.list.set(event, callbacks.filter(function (c) {
+        return c.listenerId !== listenerId;
+      }));
+    } else {
+      this.list.delete(event);
+    }
+
     return this;
   },
 
@@ -652,7 +662,7 @@ function (_Component) {
   };
 
   _proto.componentWillUnmount = function componentWillUnmount() {
-    eventManager.off(ACTION.SHOW).off(ACTION.CLEAR).emit(ACTION.WILL_UNMOUNT, this);
+    eventManager.off(ACTION.SHOW, this.props.containerId).off(ACTION.CLEAR, this.props.containerId).emit(ACTION.WILL_UNMOUNT, this);
   };
 
   _proto.listenToToastActions = function listenToToastActions() {
@@ -660,9 +670,9 @@ function (_Component) {
 
     eventManager.on(ACTION.SHOW, function (content, options) {
       return _this2.buildToast(content, options);
-    }).on(ACTION.CLEAR, function (id) {
+    }, this.props.containerId).on(ACTION.CLEAR, function (id) {
       return id == null ? _this2.clear() : _this2.removeToast(id);
-    });
+    }, this.props.containerId);
   };
 
   _proto.removeToast = function removeToast(id) {
@@ -1218,9 +1228,6 @@ eventManager.on(ACTION.DID_MOUNT, function (containerInstance) {
   queue = [];
 }).on(ACTION.WILL_UNMOUNT, function (containerInstance) {
   if (containerInstance) containers.delete(containerInstance.props.containerId || containerInstance);else containers.clear();
-  containers.forEach(function (container) {
-    container.listenToToastActions();
-  });
 
   if (canUseDom && containerDomNode) {
     document.body.removeChild(containerDomNode);
