@@ -219,10 +219,6 @@ eventManager
       );
     else containers.clear();
 
-    containers.forEach(container => {
-      container.listenToToastActions();
-    })
-
     if (canUseDom && containerDomNode) {
       document.body.removeChild(containerDomNode);
     }

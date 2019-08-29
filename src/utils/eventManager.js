@@ -1,14 +1,21 @@
 const eventManager = {
   list: new Map(),
 
-  on(event, callback) {
+  on(event, callback, listenerId) {
+    callback.listenerId = listenerId;
     this.list.has(event) || this.list.set(event, []);
     this.list.get(event).push(callback);
     return this;
   },
 
-  off(event) {
-    this.list.delete(event);
+  off(event, listenerId) {
+    if (listenerId) {
+      this.list.has(event) || this.list.set(event, []);
+      let callbacks = this.list.get(event);
+      this.list.set(event, callbacks.filter(c => c.listenerId !== listenerId));
+    } else {
+      this.list.delete(event);
+    }
     return this;
   },
 

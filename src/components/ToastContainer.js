@@ -180,16 +180,22 @@ class ToastContainer extends Component {
 
   componentWillUnmount() {
     eventManager
-      .off(ACTION.SHOW)
-      .off(ACTION.CLEAR)
+      .off(ACTION.SHOW, this.props.containerId)
+      .off(ACTION.CLEAR, this.props.containerId)
       .emit(ACTION.WILL_UNMOUNT, this);
   }
 
   listenToToastActions() {
     eventManager
-      .on(ACTION.SHOW, (content, options) => this.buildToast(content, options))
-      .on(ACTION.CLEAR, id =>
-        id == null ? this.clear() : this.removeToast(id)
+      .on(
+        ACTION.SHOW,
+        (content, options) => this.buildToast(content, options),
+        this.props.containerId
+      )
+      .on(
+        ACTION.CLEAR,
+        id => (id == null ? this.clear() : this.removeToast(id)),
+        this.props.containerId
       );
   }
 
