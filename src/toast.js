@@ -187,7 +187,7 @@ toast.TYPE = TYPE;
  */
 toast.isActive = (id, containerId) => {
   if (containerId) {
-    const containerInstance = containers.get(id);
+    const containerInstance = containers.get(containerId);
     return Boolean(containerInstance && containerInstance.isToastActive(id));
   } else {
     const allContainers = Array.from(containers);
