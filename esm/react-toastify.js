@@ -91,7 +91,7 @@ function ProgressBar(_ref) {
     'Toastify__progress-bar--rtl': rtl
   }, className);
   var animationEvent = (_animationEvent = {}, _animationEvent[controlledProgress && progress >= 1 ? 'onTransitionEnd' : 'onAnimationEnd'] = controlledProgress && progress < 1 ? null : closeToast, _animationEvent);
-  return React.createElement("div", _extends({
+  return /*#__PURE__*/React.createElement("div", _extends({
     className: classNames,
     style: style
   }, animationEvent));
@@ -158,9 +158,7 @@ function getY(e) {
 
 var iLoveInternetExplorer = canUseDom && /(msie|trident)/i.test(navigator.userAgent);
 
-var Toast =
-/*#__PURE__*/
-function (_Component) {
+var Toast = /*#__PURE__*/function (_Component) {
   _inheritsLoose(Toast, _Component);
 
   function Toast() {
@@ -403,13 +401,13 @@ function (_Component) {
     }
 
     var controlledProgress = parseFloat(progress) === progress;
-    return React.createElement(Transition, {
+    return /*#__PURE__*/React.createElement(Transition, {
       in: this.props.in,
       appear: true,
       onExited: this.onExitTransitionEnd,
       position: position,
       preventExitTransition: this.state.preventExitTransition
-    }, React.createElement("div", _extends({
+    }, /*#__PURE__*/React.createElement("div", _extends({
       onClick: onClick
     }, toastProps, {
       ref: function ref(_ref) {
@@ -419,11 +417,11 @@ function (_Component) {
       onTouchStart: this.onDragStart,
       onMouseUp: this.onDragTransitionEnd,
       onTouchEnd: this.onDragTransitionEnd
-    }), React.createElement("div", _extends({}, this.props.in && {
+    }), /*#__PURE__*/React.createElement("div", _extends({}, this.props.in && {
       role: role
     }, {
       className: cx('Toastify__toast-body', bodyClassName)
-    }), children), closeButton && closeButton, (autoClose || controlledProgress) && React.createElement(ProgressBar, _extends({}, updateId && !controlledProgress ? {
+    }), children), closeButton && closeButton, (autoClose || controlledProgress) && /*#__PURE__*/React.createElement(ProgressBar, _extends({}, updateId && !controlledProgress ? {
       key: "pb-" + updateId
     } : {}, {
       rtl: rtl,
@@ -486,7 +484,7 @@ function CloseButton(_ref) {
   var closeToast = _ref.closeToast,
       type = _ref.type,
       ariaLabel = _ref.ariaLabel;
-  return React.createElement("button", {
+  return /*#__PURE__*/React.createElement("button", {
     className: "Toastify__close-button Toastify__close-button--" + type,
     type: "button",
     onClick: function onClick(e) {
@@ -505,6 +503,7 @@ CloseButton.defaultProps = {
   ariaLabel: 'close'
 };
 
+var _excluded = ["children", "position", "preventExitTransition"];
 function cssTransition (_ref) {
   var enter = _ref.enter,
       exit = _ref.exit,
@@ -516,7 +515,7 @@ function cssTransition (_ref) {
     var children = _ref2.children,
         position = _ref2.position,
         preventExitTransition = _ref2.preventExitTransition,
-        props = _objectWithoutPropertiesLoose(_ref2, ["children", "position", "preventExitTransition"]);
+        props = _objectWithoutPropertiesLoose(_ref2, _excluded);
 
     var enterClassName = appendPosition ? enter + "--" + position : enter;
     var exitClassName = appendPosition ? exit + "--" + position : exit;
@@ -546,7 +545,7 @@ function cssTransition (_ref) {
       node.style.animationDuration = exitDuration * 0.001 + "s";
     };
 
-    return React.createElement(Transition, _extends({}, props, {
+    return /*#__PURE__*/React.createElement(Transition, _extends({}, props, {
       timeout: preventExitTransition ? 0 : {
         enter: enterDuration,
         exit: exitDuration
@@ -621,9 +620,9 @@ var eventManager = {
   }
 };
 
-var ToastContainer =
-/*#__PURE__*/
-function (_Component) {
+var _excluded$1 = ["delay"];
+
+var ToastContainer = /*#__PURE__*/function (_Component) {
   _inheritsLoose(ToastContainer, _Component);
 
   function ToastContainer() {
@@ -685,13 +684,13 @@ function (_Component) {
 
     var closeButton = this.props.closeButton;
 
-    if (isValidElement(toastClose) || toastClose === false) {
+    if ( /*#__PURE__*/isValidElement(toastClose) || toastClose === false) {
       closeButton = toastClose;
     } else if (toastClose === true) {
-      closeButton = React.createElement(CloseButton, null);
+      closeButton = /*#__PURE__*/React.createElement(CloseButton, null);
     }
 
-    return closeButton === false ? false : cloneElement(closeButton, {
+    return closeButton === false ? false : /*#__PURE__*/cloneElement(closeButton, {
       closeToast: function closeToast() {
         return _this3.removeToast(toastId);
       },
@@ -704,7 +703,7 @@ function (_Component) {
   };
 
   _proto.canBeRendered = function canBeRendered(content) {
-    return isValidElement(content) || typeof content === 'string' || typeof content === 'number' || typeof content === 'function';
+    return /*#__PURE__*/isValidElement(content) || typeof content === 'string' || typeof content === 'number' || typeof content === 'function';
   };
 
   _proto.parseClassName = function parseClassName(prop) {
@@ -726,7 +725,7 @@ function (_Component) {
     var _this4 = this;
 
     var delay = _ref2.delay,
-        options = _objectWithoutPropertiesLoose(_ref2, ["delay"]);
+        options = _objectWithoutPropertiesLoose(_ref2, _excluded$1);
 
     if (!this.canBeRendered(content)) {
       throw new Error("The element you provided cannot be rendered. You provided an element of type " + typeof content);
@@ -773,8 +772,8 @@ function (_Component) {
     typeof options.onOpen === 'function' && (toastOptions.onOpen = options.onOpen);
     typeof options.onClose === 'function' && (toastOptions.onClose = options.onClose); // add closeToast function to react component only
 
-    if (isValidElement(content) && typeof content.type !== 'string' && typeof content.type !== 'number') {
-      content = cloneElement(content, {
+    if ( /*#__PURE__*/isValidElement(content) && typeof content.type !== 'string' && typeof content.type !== 'number') {
+      content = /*#__PURE__*/cloneElement(content, {
         closeToast: closeToast
       });
     } else if (typeof content === 'function') {
@@ -833,7 +832,7 @@ function (_Component) {
       toastToRender[position] || (toastToRender[position] = []);
 
       if (_this5.state.toast.indexOf(options.id) !== -1) {
-        toastToRender[position].push(React.createElement(Toast, _extends({}, options, {
+        toastToRender[position].push( /*#__PURE__*/React.createElement(Toast, _extends({}, options, {
           isDocumentHidden: _this5.state.isDocumentHidden,
           key: "toast-" + options.key
         }), content));
@@ -852,14 +851,14 @@ function (_Component) {
           pointerEvents: 'none'
         }) : _extends({}, style)
       };
-      return React.createElement(TransitionGroup, _extends({}, props, {
+      return /*#__PURE__*/React.createElement(TransitionGroup, _extends({}, props, {
         key: "container-" + position
       }), toastToRender[position]);
     });
   };
 
   _proto.render = function render() {
-    return React.createElement("div", {
+    return /*#__PURE__*/React.createElement("div", {
       className: "Toastify"
     }, this.renderToast());
   };
@@ -984,7 +983,7 @@ ToastContainer.defaultProps = {
   rtl: false,
   autoClose: 5000,
   hideProgressBar: false,
-  closeButton: React.createElement(CloseButton, null),
+  closeButton: /*#__PURE__*/React.createElement(CloseButton, null),
   pauseOnHover: true,
   pauseOnFocusLoss: true,
   closeOnClick: true,
@@ -1087,7 +1086,7 @@ function dispatchToast(content, options) {
       lazy = false;
       containerDomNode = document.createElement('div');
       document.body.appendChild(containerDomNode);
-      render(React.createElement(ToastContainer, containerConfig), containerDomNode);
+      render( /*#__PURE__*/React.createElement(ToastContainer, containerConfig), containerDomNode);
     }
   }
 
